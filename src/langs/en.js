@@ -1,8 +1,9 @@
 //Add strings
 gdprCookieNoticeLocales.en = {
-  description: 'We use cookies to offer you a better browsing experience, personalise content and ads, to provide social media features and to analyse our traffic. Read about how we use cookies and how you can control them by clicking Cookie Settings. You consent to our cookies if you continue to use this website.',
+  description: 'We place essential cookes but would like to use cookies to offer you a better browsing experience, personalise content and ads, to provide social media features and to analyse our traffic. Please click <strong class="gdpr-cookie-notice-settings-button">Cookie Settings</strong> to enable additional cookings or Ok to continue with just essential cookies.',
   settings: 'Cookie settings',
-  accept: 'Accept cookies',
+  accept: 'OK',
+  revoke: 'Cookie settings',
   statement: 'Our cookie statement',
   save: 'Save settings',
   always_on: 'Always on',

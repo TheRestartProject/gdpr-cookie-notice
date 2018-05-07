@@ -23,9 +23,11 @@ function gdprCookieNotice(config) {
 
   // Show cookie bar if needed
   if(!currentCookieSelection) {
+    //Bar has not yet been shown.
     showNotice();
 
     // Accept cookies on page scroll
+    //This should not be used with GDPR, it is now explicit acceptance
     if(config.implicit) {
       acceptOnScroll();
     }
@@ -33,6 +35,11 @@ function gdprCookieNotice(config) {
     deleteCookies(currentCookieSelection);
     document.dispatchEvent(cookiesAcceptedEvent);
   }
+
+  //Add a settings button so cookies can be altered later.
+
+  var settingsHtml = localizeTemplate('settings.html');
+  document.body.insertAdjacentHTML('beforeend', settingsHtml);
 
   // Get gdpr cookie notice stored value
   function getCookie() {
@@ -50,13 +57,6 @@ function gdprCookieNotice(config) {
         }
       }
     }
-
-    // Show the notice if not all categories are enabled
-    if(notAllEnabled) {
-      showNotice();
-    } else {
-      hideNotice();
-    }
   }
 
   // Hide cookie notice bar
@@ -64,24 +64,30 @@ function gdprCookieNotice(config) {
     document.documentElement.classList.remove(pluginPrefix+'-loaded');
   }
 
-  // Write gdpr cookie notice's cookies when user accepts cookies
+  // Write GDPR cookie notice's cookies when user accepts cookies
   function acceptCookies(save) {
+    //Default is only essentials are enabled.
     var value = {
       date: new Date(),
       necessary: true,
-      performace: true,
-      analytics: true,
-      marketing: true
+      performace: false,
+      analytics: false,
+      marketing: false,
     };
 
     // If request was coming from the modal, check for the settings
     if(save) {
       for (var i = 0; i < categories.length; i++) {
+        console.log(value[categories[i]]);
+        console.log(categories[i]);
+        console.log('----');
         value[categories[i]] = document.getElementById(pluginPrefix+'-cookie_'+categories[i]).checked;
       }
     }
+
     gdprCookies.set(namespace, value, { expires: config.expiration, domain: config.domain });
     deleteCookies(value);
+  //hideNotice();
 
     // Load marketing scripts that only works when cookies are accepted
     cookiesAcceptedEvent = new CustomEvent('gdprCookiesEnabled', {detail: value});
@@ -186,6 +192,11 @@ function gdprCookieNotice(config) {
       document.getElementById(pluginPrefix+'-cookie_performace').checked = currentCookieSelection.performace;
       document.getElementById(pluginPrefix+'-cookie_analytics').checked = currentCookieSelection.analytics;
       document.getElementById(pluginPrefix+'-cookie_marketing').checked = currentCookieSelection.marketing;
+    }else{
+      //default is all disabled.
+      document.getElementById(pluginPrefix+'-cookie_performace').checked = false;
+      document.getElementById(pluginPrefix+'-cookie_analytics').checked = false;
+      document.getElementById(pluginPrefix+'-cookie_marketing').checked = false;
     }
 
     // Make sure modal is only loaded once
@@ -216,6 +227,7 @@ function gdprCookieNotice(config) {
     acceptButton.addEventListener('click', function(e) {
       e.preventDefault();
       acceptCookies();
+      hideNotice();
     });
 
   }
@@ -251,6 +263,7 @@ function gdprCookieNotice(config) {
         saveButton.classList.remove('saved');
       }, 1000);
       acceptCookies(true);
+      hideModal();
     });
 
   }

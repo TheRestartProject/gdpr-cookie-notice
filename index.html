@@ -32,7 +32,7 @@
   statement: 'https://google.com', //Link to your cookie statement page
   performace: ['JSESSIONID'], //Cookies in the performance category.
   analytics: ['ga'], //Cookies in the analytics category.
-  marketing: [SSID'] //Cookies in the marketing category.
+  marketing: ['SSID'] //Cookies in the marketing category.
 });</code></pre>
 
                 <p>Now the notice will be visible on page load at the bottom of the screen. Clicking on cookie settings will display a modal window, with 4 cookie categories: essential, performance, analytics and marketing. Everything is checked by default. Cookies listed in the config file for each category will be deleted on page load, if user is opted our from a specific category.</p>
@@ -43,7 +43,9 @@
                 <pre class="language-javascript"><code class="language-javascript">&lt;script type=&quot;text/javascript&quot;&gt;
   document.addEventListener('gdprCookiesEnabled', function (e) {
     if(e.detail.marketing) { //checks if marketing cookies are enabled
-      //facebook pixel code
+      //code here when marketing cookies are enabled
+    }else{
+      //code here when marketing cookies are disabled
     }
   });
 &lt;/script&gt;</code></pre>
@@ -71,7 +73,7 @@
 
     <script>
     gdprCookieNotice({
-      statement: 'https://www.nold.io',
+      statement: '/cookies',
       performace: ['JSESSIONID'],
       analytics: ['_gat', 'ga'],
       marketing: ['SSID']
@@ -80,6 +82,7 @@
 
     <script type="text/javascript">
     document.addEventListener('gdprCookiesEnabled', function (e) {
+      console.log(e);
       if(e.detail.marketing) {
         console.log('marketing cookies are enabled');
       }
