@@ -70,24 +70,24 @@ function gdprCookieNotice(config) {
     var value = {
       date: new Date(),
       necessary: true,
-      performace: false,
-      analytics: false,
+      performace: true,
+      analytics: true,
       marketing: false,
     };
 
     // If request was coming from the modal, check for the settings
     if(save) {
       for (var i = 0; i < categories.length; i++) {
-        console.log(value[categories[i]]);
-        console.log(categories[i]);
-        console.log('----');
         value[categories[i]] = document.getElementById(pluginPrefix+'-cookie_'+categories[i]).checked;
+          console.log(value[categories[i]]);
+          console.log(categories[i]);
+          console.log('----');
       }
     }
 
     gdprCookies.set(namespace, value, { expires: config.expiration, domain: config.domain });
     deleteCookies(value);
-  //hideNotice();
+    //hideNotice();
 
     // Load marketing scripts that only works when cookies are accepted
     cookiesAcceptedEvent = new CustomEvent('gdprCookiesEnabled', {detail: value});
@@ -194,8 +194,8 @@ function gdprCookieNotice(config) {
       document.getElementById(pluginPrefix+'-cookie_marketing').checked = currentCookieSelection.marketing;
     }else{
       //default is all disabled.
-      document.getElementById(pluginPrefix+'-cookie_performace').checked = false;
-      document.getElementById(pluginPrefix+'-cookie_analytics').checked = false;
+      document.getElementById(pluginPrefix+'-cookie_performace').checked = true;
+      document.getElementById(pluginPrefix+'-cookie_analytics').checked = true;
       document.getElementById(pluginPrefix+'-cookie_marketing').checked = false;
     }
 
