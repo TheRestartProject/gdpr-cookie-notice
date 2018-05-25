@@ -52,7 +52,9 @@ function gdprCookieNotice(config) {
     for (var i = 0; i < categories.length; i++) {
       if(config[categories[i]] && !savedCookies[categories[i]]) {
         for (var ii = 0; ii < config[categories[i]].length; ii++) {
-          gdprCookies.remove(config[categories[i]][ii]);
+          var cookieName = config[categories[i]][ii];
+          gdprCookies.remove(cookieName);
+          document.cookie = cookieName + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
           notAllEnabled = true;
         }
       }
