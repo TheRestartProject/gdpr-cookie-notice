@@ -264,6 +264,7 @@ function gdprCookieNotice(config) {
       }, 1000);
       acceptCookies(true);
       hideModal();
+      hideNotice();
     });
 
   }
