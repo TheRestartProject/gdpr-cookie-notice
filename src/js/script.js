@@ -38,8 +38,8 @@ function gdprCookieNotice(config) {
 
   //Add a settings button so cookies can be altered later.
 
-  var settingsHtml = localizeTemplate('settings.html');
-  document.body.insertAdjacentHTML('beforeend', settingsHtml);
+  //var settingsHtml = localizeTemplate('settings.html');
+  //document.body.insertAdjacentHTML('beforeend', settingsHtml);
 
   // Get gdpr cookie notice stored value
   function getCookie() {
